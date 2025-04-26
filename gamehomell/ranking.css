@@ -1,0 +1,219 @@
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 60px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* 네비게이션 바 */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3a3a3a;
+    padding: 15px 20px;
+    color: white;
+
+    position: fixed;  /* 화면 최상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;  /* 다른 요소보다 위에 배치 */
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header_nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.header_nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: background 0.3s;
+}
+
+.header_nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* 랭킹 페이지 스타일 */
+.ranking-container {
+    padding: 120px 500px;
+    text-align: center;
+}
+
+.ranking-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* 상위 4명의 카드 스타일 */
+.top-rank {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.rank-card {
+    background: white;
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    width: 150px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rank-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+/* 랭킹 테이블 */
+.table {
+    padding: 0 100px;
+    margin: 0 auto;
+    width: 80%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 페이지네이션 버튼 */
+.pagination {
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#prevBtn {
+    background: gray;
+    color: white;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+
+#nextBtn {
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+}
+
+/* 로그인 영역 */
+.login_area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-width: 250px;
+    margin: 20px auto;
+}
+
+/* 입력 필드 */
+.input_field {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 버튼 스타일 */
+.btn_login, .btn_join {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn_login {
+    background: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn_login:hover {
+    background: #0056b3;
+}
+
+.btn_join {
+    background: white;
+    border: 1px solid #007bff;
+    color: #007bff;
+}
+
+.btn_join:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* 푸터 */
+#footer {
+    background: #3a3a3a;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .ranking-container {
+        padding: 20px;
+    }
+
+    .top-rank {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .login_area {
+        max-width: 100%;
+    }
+
+    .header_nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

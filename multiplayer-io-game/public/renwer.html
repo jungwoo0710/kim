@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Selection Game</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #ddd;
+    }
+    .controls {
+      margin-bottom: 10px;
+    }
+    .game-container {
+      width: 800px;
+      height: 600px;
+      position: relative;
+      overflow: hidden;
+      background: url('https://i.pinimg.com/736x/1c/8b/75/1c8b7542359bb190ebfaa8fbc0548365.jpg') no-repeat center center;
+      background-size: cover;
+      border: 2px solid black;
+    }
+    .character-container {
+      position: absolute;
+      overflow: hidden;
+    }
+    .character {
+      position: absolute;
+      image-rendering: pixelated;
+    }
+    .weapon {
+      position: absolute;
+      pointer-events: none;
+      image-rendering: pixelated;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label for="jobSelect">Choose a character: </label>
+    <select id="jobSelect">
+      <option value="warrior">Warrior</option>
+      <option value="archer">Archer</option>
+      <option value="wizard">Wizard</option>
+    </select>
+  </div>
+
+  <div class="game-container" id="gameContainer">
+    <div class="character-container" id="charContainer">
+      <img class="character" id="character" src="" alt="character sprite" />
+    </div>
+    <img id="weapon" class="weapon" src="" alt="weapon" />
+  </div>
+
+  <script>
+    const character = document.getElementById("character");
+    const charContainer = document.getElementById("charContainer");
+    const weapon = document.getElementById("weapon");
+    const gameContainer = document.getElementById("gameContainer");
+    const jobSelect = document.getElementById("jobSelect");
+
+    const gameWidth = gameContainer.clientWidth;
+    const gameHeight = gameContainer.clientHeight;
+
+    const jobs = {
+      warrior: {
+        src: "./killyou2.png",
+        weapon: "./kimremove.png",
+        frameWidth: 58,
+        frameHeight: 117,
+        weaponScale: 0.2,
+        directionLogic: (key) => {
+          if (key === "ArrowLeft") return { dx: -1, dy: 0, dirY: 2 };
+          if (key === "ArrowRight") return { dx: 1, dy: 0, dirY: 3 };
+          if (key === "ArrowUp") return { dx: 0, dy: -1, dirY: 1 };
+          if (key === "ArrowDown") return { dx: 0, dy: 1, dirY: 0 };
+        },
+        weaponLogic: (x, y, dir) => {
+          if (dir === 0) return { x: x - 210, y: y - 215, rotate: 55 };
+          if (dir === 1) return { x: x - 195, y: y - 220, rotate: 60 };
+          if (dir === 2) return { x: x - 250, y: y - 200, rotate: 0 };
+          return { x: x - 200, y: y - 210, rotate: 90 };
+        },
+      },
+      archer: {
+        src: "./helpme.png",
+        weapon: "./shootingremove.png",
+        frameWidth: 87,
+        frameHeight: 90,
+        weaponScale: 0.2,
+        directionLogic: (key) => {
+          if (key === "ArrowLeft") return { dx: -1, dy: 0, dirY: 0 };
+          if (key === "ArrowRight") return { dx: 1, dy: 0, dirY: 1 };
+          if (key === "ArrowUp") return { dx: 0, dy: -1, dirY: 2 };
+          if (key === "ArrowDown") return { dx: 0, dy: 1, dirY: 3 };
+        },
+        weaponLogic: (x, y, dir) => {
+          if (dir === 0) return { x: x - 210, y: y - 215, rotate: 55 };
+          if (dir === 1) return { x: x - 195, y: y - 220, rotate: 60 };
+          if (dir === 2) return { x: x - 250, y: y - 200, rotate: 0 };
+          return { x: x - 200, y: y - 210, rotate: 90 };
+        },
+      },
+      wizard: {
+        src: "./ling.png",
+        weapon: "./stickremove.png",
+        frameWidth: 59.5,
+        frameHeight: 88.25,
+        weaponScale: 0.2,
+        directionLogic: (key) => {
+          if (key === "ArrowLeft") return { dx: -1, dy: 0, dirY: 1 };
+          if (key === "ArrowRight") return { dx: 1, dy: 0, dirY: 2 };
+          if (key === "ArrowUp") return { dx: 0, dy: -1, dirY: 3 };
+          if (key === "ArrowDown") return { dx: 0, dy: 1, dirY: 0 };
+        },
+        weaponLogic: (x, y, dir) => {
+          if (dir === 0) return { x: x + 35, y: y + 25, rotate: -45 };
+          if (dir === 1) return { x: x + 15, y: y + 20, rotate: -45 };
+          if (dir === 2) return { x: x + 15, y: y + 32, rotate: 40 };
+          return { x: x + 35, y: y + 30, rotate: 35 };
+        },
+      },
+    };
+
+    let job = jobSelect.value;
+    let posX, posY, frame = 0, directionY = 0, speed = 48;
+
+    function initCharacter() {
+      job = jobSelect.value;
+      const data = jobs[job];
+
+      character.src = data.src;
+      weapon.src = data.weapon;
+
+      character.style.width = data.frameWidth * 4 + "px";
+      character.style.height = data.frameHeight * 4 + "px";
+
+      charContainer.style.width = data.frameWidth + "px";
+      charContainer.style.height = data.frameHeight + "px";
+
+      posX = gameWidth / 2 - data.frameWidth / 2;
+      posY = gameHeight / 2 - data.frameHeight / 2;
+
+      updateCharacter();
+    }
+
+    function updateCharacter() {
+      const data = jobs[job];
+
+      charContainer.style.left = posX + "px";
+      charContainer.style.top = posY + "px";
+      character.style.transform = `translate(-${frame * data.frameWidth}px, -${directionY * data.frameHeight}px)`;
+
+      const gameRect = gameContainer.getBoundingClientRect();
+      const charRect = charContainer.getBoundingClientRect();
+      const baseX = charRect.left - gameRect.left;
+      const baseY = charRect.top - gameRect.top;
+
+      const weaponPos = data.weaponLogic(baseX, baseY, directionY);
+      weapon.style.left = weaponPos.x + "px";
+      weapon.style.top = weaponPos.y + "px";
+      weapon.style.transform = `scale(${data.weaponScale}) rotate(${weaponPos.rotate}deg)`;
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (e.repeat) return;
+      const data = jobs[job];
+      const move = data.directionLogic(e.code);
+      if (!move) return;
+
+      posX += move.dx * speed;
+      posY += move.dy * speed;
+      directionY = move.dirY;
+
+      const maxX = gameWidth - data.frameWidth;
+      const maxY = gameHeight - data.frameHeight;
+
+      if (posX < 0) posX = 0;
+      if (posY < 0) posY = 0;
+      if (posX > maxX) posX = maxX;
+      if (posY > maxY) posY = maxY;
+
+      frame = (frame + 1) % 4;
+      updateCharacter();
+    });
+
+    jobSelect.addEventListener("change", initCharacter);
+    initCharacter();
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Glory Wars - Multiplayer IO Game</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 아이콘 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- 로그인 화면 -->
+    <div id="login-container">
+        <h1>Glory Wars</h1>
+        <input type="text" id="nickname-input" placeholder="닉네임을 입력하세요">
+        <h3>직업을 선택하세요:</h3>
+        <select id="class-select">
+            <option value="gladiator">검투사</option>
+            <option value="general">궁수</option>
+            <option value="archer">마법사</option>
+        </select>
+        <button id="start-button">게임 시작</button>
+    </div>
+
+    <!-- 게임 화면 -->
+    <div id="game-container" style="display: none;">
+        <!-- 점수 랭킹 보드 -->
+        <div id="scoreboard">
+            <h2>점수 랭킹</h2>
+            <ul id="ranking-list"></ul>
+        </div>
+        
+        <!-- 스킬 쿨타임 표시 -->
+        <div id="skill-cooldown">
+            <div id="skill-icon"></div>
+            <div id="cooldown-overlay">
+                <span id="cooldown-text"></span>
+            </div>
+        </div>
+        
+        <!-- 채팅창 -->
+        <div id="chat-container">
+            <div id="chat-messages"></div>
+            <input type="text" id="chat-input" placeholder="엔터를 눌러 채팅 입력">
+        </div>
+    </div>
+
+    <!-- 소셜 미디어 아이콘 -->
+    <div id="social-icons">
+        <a href="https://www.instagram.com" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com" target="_blank" class="social-icon">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.twitter.com" target="_blank" class="social-icon">
+            <i class="fab fa-twitter"></i>
+        </a>
+    </div>
+
+    <!-- 광고 배너 -->
+    <div id="left-ad" class="ad-container">
+        <a href="https://www.coupang.com/" target="_blank">
+            <img src="https://lh3.googleusercontent.com/n4lJPqTwL2LsdLD8ZuLUq0L4ghAt7eYEx5UBcyOURqLviDZINt6HEuTqvkjCtYO47ARjdaSFmM8d0i4YbL1icd--BCr78CnM1zs2pk-4u8HwoNbNZ_VbA1dgozl14ypRX6BG7Exu1qNaYbnorp-Acow-LjOt5A-9ZfHEjbomm1z5Kok5fKUYdAG3gkLVnIuq_FHYsn2jhINOQ0lGhlX79ygRDaAox9GoxTYvSy8AreV422MEk8JaXxgMTOEOCRF4P2S87MeaHCTg31i2CX8Z82qd120hODGxhKj5GXEfxFPDPO5m20A0mxFBeTJU5YUQA4zhAhaf7QJlwtVlgyFN-KBK-PyKPrpBPNUay_QjuRyz0T6lHVF7EHZpHmupiXa-zQRtXLclg75Ktz_rURyLSiM6pFl6m_IdEyUqfrCV3k1tyGNl98IuQxDfIcbEJjyn6Xb1-jxLvJE4RYlqEG4YcJjByKc4T9NzaI4TYWb_N8ke-JuPiv12FFFlz9R5ZZkZzYDfVC3yvGnWPOsNE0NLtlIV2d5vDEIRDnNiWK0r18AV7m6q8q1TypWDOPti1I4kGdnLRp2HTcAz0tsmfZkTiCPUWGErM16u2dXnv7rpRHIRnH34CgrzQZcaXX3EpfZZwGz-onh4ifxDVcLlRkMVD4msnZex6Dmo_OWbC9Knztf4ZdDmQau2Hp3dOn_uZo_rSrcukzdrG-M7JepfybS2iDK0IyZReqcdj6y2xj8w-4rHZNOEig=w651-h314-no" alt="Left Ad">
+        </a>
+        <button class="close-btn" id="close-left-ad">&times;</button>
+    </div>
+
+    <div id="right-ad" class="ad-container">
+        <a href="https://www.coupang.com/" target="_blank">
+            <img src="https://cdn.srtimes.kr/news/photo/202101/83975_75297_342.jpg" alt="Right Ad">
+        </a>
+        <button class="close-btn" id="close-right-ad">&times;</button>
+    </div>    
+
+    <div id="hp-bar-container" style="display: none;">
+        <div id="hp-bar"></div>
+        <span id="hp-text">HP</span>
+      </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
